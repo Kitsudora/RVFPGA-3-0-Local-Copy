@@ -1,0 +1,15 @@
+
+AL_Operations.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	00000e13          	li	t3,0
+
+00000004 <REPEAT>:
+   4:	006e0e13          	addi	t3,t3,6
+   8:	fffe0e13          	addi	t3,t3,-1
+   c:	003e7e13          	andi	t3,t3,3
+  10:	fe000ae3          	beqz	zero,4 <REPEAT>
+  14:	00000013          	nop
