@@ -25,22 +25,22 @@
 module rvfpganexys
   #(parameter bootrom_file  = "boot_main.mem")
    (input wire         clk,
-    input wire         rstn,
+    // input wire         rstn,
 
-    output wire [12:0] ddram_a,
-    output wire [2:0]  ddram_ba,
-    output wire        ddram_ras_n,
-    output wire        ddram_cas_n,
-    output wire        ddram_we_n,
-    output wire        ddram_cs_n,
-    output wire [1:0]  ddram_dm,
-    inout wire [15:0]  ddram_dq,
-    inout wire [1:0]  ddram_dqs_p,
-    inout wire [1:0]  ddram_dqs_n,
-    output wire        ddram_clk_p,
-    output wire        ddram_clk_n,
-    output wire        ddram_cke,
-    output wire        ddram_odt,
+    // output wire [12:0] ddram_a,
+    // output wire [2:0]  ddram_ba,
+    // output wire        ddram_ras_n,
+    // output wire        ddram_cas_n,
+    // output wire        ddram_we_n,
+    // output wire        ddram_cs_n,
+    // output wire [1:0]  ddram_dm,
+    // inout wire [15:0]  ddram_dq,
+    // inout wire [1:0]  ddram_dqs_p,
+    // inout wire [1:0]  ddram_dqs_n,
+    // output wire        ddram_clk_p,
+    // output wire        ddram_clk_n,
+    // output wire        ddram_cke,
+    // output wire        ddram_odt,
     
     output wire        o_flash_cs_n,
     output wire        o_flash_mosi,
@@ -53,6 +53,8 @@ module rvfpganexys
     output reg [7:0]  o_led
 
     );
+
+  localparam RAM_SIZE     = 32'h10000;
 
    wire [15:0]         gpio_out;
 
@@ -67,8 +69,8 @@ module rvfpganexys
    wire    user_rst;
 
    clk_gen_nexys clk_gen
-     (.i_clk (user_clk),
-      .i_rst (user_rst),
+     (.i_clk (clk),
+      .i_rst (1'b0),
       .o_clk_core (clk_core),
       .o_rst_core (rst_core));
 
@@ -84,75 +86,162 @@ module rvfpganexys
    assign mem.b_user = 1'b0;
    assign mem.r_user = 1'b0;
 
-   axi_cdc_intf
-     #(.AXI_USER_WIDTH (1),
-       .AXI_ADDR_WIDTH (32),
-       .AXI_DATA_WIDTH (64),
-       .AXI_ID_WIDTH   (6))
-   cdc
-     (
-      .src_clk_i  (clk_core),
-      .src_rst_ni (~rst_core),
-      .src        (cpu),
-      .dst_clk_i  (user_clk),
-      .dst_rst_ni (~user_rst),
-      .dst        (mem));
+  //  axi_cdc_intf
+  //    #(.AXI_USER_WIDTH (1),
+  //      .AXI_ADDR_WIDTH (32),
+  //      .AXI_DATA_WIDTH (64),
+  //      .AXI_ID_WIDTH   (6))
+  //  cdc
+  //    (
+  //     .src_clk_i  (clk_core),
+  //     .src_rst_ni (~rst_core),
+  //     .src        (cpu),
+  //     .dst_clk_i  (user_clk),
+  //     .dst_rst_ni (~user_rst),
+  //     .dst        (mem));
 
-   litedram_top
-     #(.ID_WIDTH (6))
-   ddr2
-     (.serial_tx   (litedram_tx),
-      .serial_rx   (i_uart_rx),
-      .clk100      (clk),
-      .rst_n       (rstn),
-      .pll_locked  (),
-      .user_clk    (user_clk),
-      .user_rst    (user_rst),
-      .ddram_a     (ddram_a),
-      .ddram_ba    (ddram_ba),
-      .ddram_ras_n (ddram_ras_n),
-      .ddram_cas_n (ddram_cas_n),
-      .ddram_we_n  (ddram_we_n),
-      .ddram_cs_n  (ddram_cs_n),
-      .ddram_dm    (ddram_dm   ),
-      .ddram_dq    (ddram_dq   ),
-      .ddram_dqs_p (ddram_dqs_p),
-      .ddram_dqs_n (ddram_dqs_n),
-      .ddram_clk_p (ddram_clk_p),
-      .ddram_clk_n (ddram_clk_n),
-      .ddram_cke   (ddram_cke  ),
-      .ddram_odt   (ddram_odt  ),
-      .init_done  (litedram_init_done),
-      .init_error (litedram_init_error),
-      .i_awid    (mem.aw_id   ),
-      .i_awaddr  (mem.aw_addr[26:0] ),
-      .i_awlen   (mem.aw_len  ),
-      .i_awsize  ({1'b0,mem.aw_size} ),
-      .i_awburst (mem.aw_burst),
-      .i_awvalid (mem.aw_valid),
-      .o_awready (mem.aw_ready),
-      .i_arid    (mem.ar_id   ),
-      .i_araddr  (mem.ar_addr[26:0] ),
-      .i_arlen   (mem.ar_len  ),
-      .i_arsize  ({1'b0,mem.ar_size} ),
-      .i_arburst (mem.ar_burst),
-      .i_arvalid (mem.ar_valid),
-      .o_arready (mem.ar_ready),
-      .i_wdata   (mem.w_data  ),
-      .i_wstrb   (mem.w_strb  ),
-      .i_wlast   (mem.w_last  ),
-      .i_wvalid  (mem.w_valid ),
-      .o_wready  (mem.w_ready ),
-      .o_bid     (mem.b_id    ),
-      .o_bresp   (mem.b_resp  ),
-      .o_bvalid  (mem.b_valid ),
-      .i_bready  (mem.b_ready ),
-      .o_rid     (mem.r_id    ),
-      .o_rdata   (mem.r_data  ),
-      .o_rresp   (mem.r_resp  ),
-      .o_rlast   (mem.r_last  ),
-      .o_rvalid  (mem.r_valid ),
-      .i_rready  (mem.r_ready ));
+  //  litedram_top
+  //    #(.ID_WIDTH (6))
+  //  ddr2
+  //    (.serial_tx   (litedram_tx),
+  //     .serial_rx   (i_uart_rx),
+  //     .clk100      (clk),
+  //     .rst_n       (rstn),
+  //     .pll_locked  (),
+  //     .user_clk    (user_clk),
+  //     .user_rst    (user_rst),
+  //     .ddram_a     (ddram_a),
+  //     .ddram_ba    (ddram_ba),
+  //     .ddram_ras_n (ddram_ras_n),
+  //     .ddram_cas_n (ddram_cas_n),
+  //     .ddram_we_n  (ddram_we_n),
+  //     .ddram_cs_n  (ddram_cs_n),
+  //     .ddram_dm    (ddram_dm   ),
+  //     .ddram_dq    (ddram_dq   ),
+  //     .ddram_dqs_p (ddram_dqs_p),
+  //     .ddram_dqs_n (ddram_dqs_n),
+  //     .ddram_clk_p (ddram_clk_p),
+  //     .ddram_clk_n (ddram_clk_n),
+  //     .ddram_cke   (ddram_cke  ),
+  //     .ddram_odt   (ddram_odt  ),
+  //     .init_done  (litedram_init_done),
+  //     .init_error (litedram_init_error),
+  //     .i_awid    (mem.aw_id   ),
+  //     .i_awaddr  (mem.aw_addr[26:0] ),
+  //     .i_awlen   (mem.aw_len  ),
+  //     .i_awsize  ({1'b0,mem.aw_size} ),
+  //     .i_awburst (mem.aw_burst),
+  //     .i_awvalid (mem.aw_valid),
+  //     .o_awready (mem.aw_ready),
+  //     .i_arid    (mem.ar_id   ),
+  //     .i_araddr  (mem.ar_addr[26:0] ),
+  //     .i_arlen   (mem.ar_len  ),
+  //     .i_arsize  ({1'b0,mem.ar_size} ),
+  //     .i_arburst (mem.ar_burst),
+  //     .i_arvalid (mem.ar_valid),
+  //     .o_arready (mem.ar_ready),
+  //     .i_wdata   (mem.w_data  ),
+  //     .i_wstrb   (mem.w_strb  ),
+  //     .i_wlast   (mem.w_last  ),
+  //     .i_wvalid  (mem.w_valid ),
+  //     .o_wready  (mem.w_ready ),
+  //     .o_bid     (mem.b_id    ),
+  //     .o_bresp   (mem.b_resp  ),
+  //     .o_bvalid  (mem.b_valid ),
+  //     .i_bready  (mem.b_ready ),
+  //     .o_rid     (mem.r_id    ),
+  //     .o_rdata   (mem.r_data  ),
+  //     .o_rresp   (mem.r_resp  ),
+  //     .o_rlast   (mem.r_last  ),
+  //     .o_rvalid  (mem.r_valid ),
+  //     .i_rready  (mem.r_ready ));
+
+   wire [5:0]  ram_awid;
+   wire [31:0] ram_awaddr;
+   wire [7:0]  ram_awlen;
+   wire [2:0]  ram_awsize;
+   wire [1:0]  ram_awburst;
+   wire        ram_awlock;
+   wire [3:0]  ram_awcache;
+   wire [2:0]  ram_awprot;
+   wire [3:0]  ram_awregion;
+   wire [3:0]  ram_awqos;
+   wire        ram_awvalid;
+   wire        ram_awready;
+   wire [5:0]  ram_arid;
+   wire [31:0] ram_araddr;
+   wire [7:0]  ram_arlen;
+   wire [2:0]  ram_arsize;
+   wire [1:0]  ram_arburst;
+   wire        ram_arlock;
+   wire [3:0]  ram_arcache;
+   wire [2:0]  ram_arprot;
+   wire [3:0]  ram_arregion;
+   wire [3:0]  ram_arqos;
+   wire        ram_arvalid;
+   wire        ram_arready;
+   wire [63:0] ram_wdata;
+   wire [7:0]  ram_wstrb;
+   wire        ram_wlast;
+   wire        ram_wvalid;
+   wire        ram_wready;
+   wire [5:0]  ram_bid;
+   wire [1:0]  ram_bresp;
+   wire        ram_bvalid;
+   wire        ram_bready;
+   wire [5:0]  ram_rid;
+   wire [63:0] ram_rdata;
+   wire [1:0]  ram_rresp;
+   wire        ram_rlast;
+   wire        ram_rvalid;
+   wire        ram_rready;
+
+   axi_ram
+     #(.DATA_WIDTH (64),
+       .ADDR_WIDTH ($clog2(RAM_SIZE)),
+       .ID_WIDTH  (`RV_LSU_BUS_TAG+3))
+   ram
+     (.clk       (clk_core),
+      .rst       (rst_core),
+      .s_axi_awid    (ram_awid),
+      .s_axi_awaddr  (ram_awaddr[$clog2(RAM_SIZE)-1:0]),
+      .s_axi_awlen   (ram_awlen),
+      .s_axi_awsize  (ram_awsize),
+      .s_axi_awburst (ram_awburst),
+      .s_axi_awlock  (1'd0),
+      .s_axi_awcache (4'd0),
+      .s_axi_awprot  (3'd0),
+      .s_axi_awvalid (ram_awvalid),
+      .s_axi_awready (ram_awready),
+
+      .s_axi_arid    (ram_arid),
+      .s_axi_araddr  (ram_araddr[$clog2(RAM_SIZE)-1:0]),
+      .s_axi_arlen   (ram_arlen),
+      .s_axi_arsize  (ram_arsize),
+      .s_axi_arburst (ram_arburst),
+      .s_axi_arlock  (1'd0),
+      .s_axi_arcache (4'd0),
+      .s_axi_arprot  (3'd0),
+      .s_axi_arvalid (ram_arvalid),
+      .s_axi_arready (ram_arready),
+
+      .s_axi_wdata  (ram_wdata),
+      .s_axi_wstrb  (ram_wstrb),
+      .s_axi_wlast  (ram_wlast),
+      .s_axi_wvalid (ram_wvalid),
+      .s_axi_wready (ram_wready),
+
+      .s_axi_bid    (ram_bid),
+      .s_axi_bresp  (ram_bresp),
+      .s_axi_bvalid (ram_bvalid),
+      .s_axi_bready (ram_bready),
+
+      .s_axi_rid    (ram_rid),
+      .s_axi_rdata  (ram_rdata),
+      .s_axi_rresp  (ram_rresp),
+      .s_axi_rlast  (ram_rlast),
+      .s_axi_rvalid (ram_rvalid),
+      .s_axi_rready (ram_rready));
 
    wire        dmi_reg_en;
    wire [6:0]  dmi_reg_addr;
@@ -212,47 +301,88 @@ module rvfpganexys
       .i_flash_miso   (i_flash_miso),
       .i_uart_rx      (i_uart_rx),
       .o_uart_tx      (cpu_tx),
-      .o_ram_awid     (cpu.aw_id),
-      .o_ram_awaddr   (cpu.aw_addr),
-      .o_ram_awlen    (cpu.aw_len),
-      .o_ram_awsize   (cpu.aw_size),
-      .o_ram_awburst  (cpu.aw_burst),
-      .o_ram_awlock   (cpu.aw_lock),
-      .o_ram_awcache  (cpu.aw_cache),
-      .o_ram_awprot   (cpu.aw_prot),
-      .o_ram_awregion (cpu.aw_region),
-      .o_ram_awqos    (cpu.aw_qos),
-      .o_ram_awvalid  (cpu.aw_valid),
-      .i_ram_awready  (cpu.aw_ready),
-      .o_ram_arid     (cpu.ar_id),
-      .o_ram_araddr   (cpu.ar_addr),
-      .o_ram_arlen    (cpu.ar_len),
-      .o_ram_arsize   (cpu.ar_size),
-      .o_ram_arburst  (cpu.ar_burst),
-      .o_ram_arlock   (cpu.ar_lock),
-      .o_ram_arcache  (cpu.ar_cache),
-      .o_ram_arprot   (cpu.ar_prot),
-      .o_ram_arregion (cpu.ar_region),
-      .o_ram_arqos    (cpu.ar_qos),
-      .o_ram_arvalid  (cpu.ar_valid),
-      .i_ram_arready  (cpu.ar_ready),
-      .o_ram_wdata    (cpu.w_data),
-      .o_ram_wstrb    (cpu.w_strb),
-      .o_ram_wlast    (cpu.w_last),
-      .o_ram_wvalid   (cpu.w_valid),
-      .i_ram_wready   (cpu.w_ready),
-      .i_ram_bid      (cpu.b_id),
-      .i_ram_bresp    (cpu.b_resp),
-      .i_ram_bvalid   (cpu.b_valid),
-      .o_ram_bready   (cpu.b_ready),
-      .i_ram_rid      (cpu.r_id),
-      .i_ram_rdata    (cpu.r_data),
-      .i_ram_rresp    (cpu.r_resp),
-      .i_ram_rlast    (cpu.r_last),
-      .i_ram_rvalid   (cpu.r_valid),
-      .o_ram_rready   (cpu.r_ready),
-      .i_ram_init_done  (litedram_init_done),
-      .i_ram_init_error (litedram_init_error),
+      // .o_ram_awid     (cpu.aw_id),
+      // .o_ram_awaddr   (cpu.aw_addr),
+      // .o_ram_awlen    (cpu.aw_len),
+      // .o_ram_awsize   (cpu.aw_size),
+      // .o_ram_awburst  (cpu.aw_burst),
+      // .o_ram_awlock   (cpu.aw_lock),
+      // .o_ram_awcache  (cpu.aw_cache),
+      // .o_ram_awprot   (cpu.aw_prot),
+      // .o_ram_awregion (cpu.aw_region),
+      // .o_ram_awqos    (cpu.aw_qos),
+      // .o_ram_awvalid  (cpu.aw_valid),
+      // .i_ram_awready  (cpu.aw_ready),
+      // .o_ram_arid     (cpu.ar_id),
+      // .o_ram_araddr   (cpu.ar_addr),
+      // .o_ram_arlen    (cpu.ar_len),
+      // .o_ram_arsize   (cpu.ar_size),
+      // .o_ram_arburst  (cpu.ar_burst),
+      // .o_ram_arlock   (cpu.ar_lock),
+      // .o_ram_arcache  (cpu.ar_cache),
+      // .o_ram_arprot   (cpu.ar_prot),
+      // .o_ram_arregion (cpu.ar_region),
+      // .o_ram_arqos    (cpu.ar_qos),
+      // .o_ram_arvalid  (cpu.ar_valid),
+      // .i_ram_arready  (cpu.ar_ready),
+      // .o_ram_wdata    (cpu.w_data),
+      // .o_ram_wstrb    (cpu.w_strb),
+      // .o_ram_wlast    (cpu.w_last),
+      // .o_ram_wvalid   (cpu.w_valid),
+      // .i_ram_wready   (cpu.w_ready),
+      // .i_ram_bid      (cpu.b_id),
+      // .i_ram_bresp    (cpu.b_resp),
+      // .i_ram_bvalid   (cpu.b_valid),
+      // .o_ram_bready   (cpu.b_ready),
+      // .i_ram_rid      (cpu.r_id),
+      // .i_ram_rdata    (cpu.r_data),
+      // .i_ram_rresp    (cpu.r_resp),
+      // .i_ram_rlast    (cpu.r_last),
+      // .i_ram_rvalid   (cpu.r_valid),
+      // .o_ram_rready   (cpu.r_ready),
+      // .i_ram_init_done  (litedram_init_done),
+      // .i_ram_init_error (litedram_init_error),
+      .o_ram_awid          (ram_awid),
+      .o_ram_awaddr        (ram_awaddr),
+      .o_ram_awlen         (ram_awlen),
+      .o_ram_awsize        (ram_awsize),
+      .o_ram_awburst       (ram_awburst),
+      .o_ram_awlock        (ram_awlock),
+      .o_ram_awcache       (ram_awcache),
+      .o_ram_awprot        (ram_awprot),
+      .o_ram_awregion      (ram_awregion),
+      .o_ram_awqos         (ram_awqos),
+      .o_ram_awvalid       (ram_awvalid),
+      .i_ram_awready       (ram_awready),
+      .o_ram_arid          (ram_arid),
+      .o_ram_araddr        (ram_araddr),
+      .o_ram_arlen         (ram_arlen),
+      .o_ram_arsize        (ram_arsize),
+      .o_ram_arburst       (ram_arburst),
+      .o_ram_arlock        (ram_arlock),
+      .o_ram_arcache       (ram_arcache),
+      .o_ram_arprot        (ram_arprot),
+      .o_ram_arregion      (ram_arregion),
+      .o_ram_arqos         (ram_arqos),
+      .o_ram_arvalid       (ram_arvalid),
+      .i_ram_arready       (ram_arready),
+      .o_ram_wdata         (ram_wdata),
+      .o_ram_wstrb         (ram_wstrb),
+      .o_ram_wlast         (ram_wlast),
+      .o_ram_wvalid        (ram_wvalid),
+      .i_ram_wready        (ram_wready),
+      .i_ram_bid           (ram_bid),
+      .i_ram_bresp         (ram_bresp),
+      .i_ram_bvalid        (ram_bvalid),
+      .o_ram_bready        (ram_bready),
+      .i_ram_rid           (ram_rid),
+      .i_ram_rdata         (ram_rdata),
+      .i_ram_rresp         (ram_rresp),
+      .i_ram_rlast         (ram_rlast),
+      .i_ram_rvalid        (ram_rvalid),
+      .o_ram_rready        (ram_rready),
+      .i_ram_init_done     (1'b1),
+      .i_ram_init_error    (1'b0),
       .io_data        ({i_sw_slice[15:0],gpio_out[15:0]})
 
       );
@@ -261,7 +391,8 @@ module rvfpganexys
       o_led[7:0] <= gpio_out[7:0];
    end
 
-   assign i_sw_slice[15:0] = {8'h00,i_sw[7:0]};
+   assign i_sw_slice[7:0] = i_sw[7:0];
+   
    assign o_uart_tx = 1'b0 ? litedram_tx : cpu_tx;
 
 endmodule
