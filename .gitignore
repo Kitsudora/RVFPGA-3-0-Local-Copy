@@ -3,4 +3,4 @@
 .settings
 .library_mapping.xml
 .project
-/RVfpga/RVfpgaEL2/RVfpga_NexysVideo-DDR/examples/LedsSwitches_C-Lang/build
+build
