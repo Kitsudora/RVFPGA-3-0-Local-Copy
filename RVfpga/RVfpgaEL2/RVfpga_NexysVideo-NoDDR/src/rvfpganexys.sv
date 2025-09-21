@@ -25,22 +25,6 @@
 module rvfpganexys
   #(parameter bootrom_file  = "boot_main.mem")
    (input wire         clk,
-    // input wire         rstn,
-
-    // output wire [12:0] ddram_a,
-    // output wire [2:0]  ddram_ba,
-    // output wire        ddram_ras_n,
-    // output wire        ddram_cas_n,
-    // output wire        ddram_we_n,
-    // output wire        ddram_cs_n,
-    // output wire [1:0]  ddram_dm,
-    // inout wire [15:0]  ddram_dq,
-    // inout wire [1:0]  ddram_dqs_p,
-    // inout wire [1:0]  ddram_dqs_n,
-    // output wire        ddram_clk_p,
-    // output wire        ddram_clk_n,
-    // output wire        ddram_cke,
-    // output wire        ddram_odt,
     
     output wire        o_flash_cs_n,
     output wire        o_flash_mosi,
@@ -85,76 +69,6 @@ module rvfpganexys
    assign cpu.r_user = 1'b0;
    assign mem.b_user = 1'b0;
    assign mem.r_user = 1'b0;
-
-  //  axi_cdc_intf
-  //    #(.AXI_USER_WIDTH (1),
-  //      .AXI_ADDR_WIDTH (32),
-  //      .AXI_DATA_WIDTH (64),
-  //      .AXI_ID_WIDTH   (6))
-  //  cdc
-  //    (
-  //     .src_clk_i  (clk_core),
-  //     .src_rst_ni (~rst_core),
-  //     .src        (cpu),
-  //     .dst_clk_i  (user_clk),
-  //     .dst_rst_ni (~user_rst),
-  //     .dst        (mem));
-
-  //  litedram_top
-  //    #(.ID_WIDTH (6))
-  //  ddr2
-  //    (.serial_tx   (litedram_tx),
-  //     .serial_rx   (i_uart_rx),
-  //     .clk100      (clk),
-  //     .rst_n       (rstn),
-  //     .pll_locked  (),
-  //     .user_clk    (user_clk),
-  //     .user_rst    (user_rst),
-  //     .ddram_a     (ddram_a),
-  //     .ddram_ba    (ddram_ba),
-  //     .ddram_ras_n (ddram_ras_n),
-  //     .ddram_cas_n (ddram_cas_n),
-  //     .ddram_we_n  (ddram_we_n),
-  //     .ddram_cs_n  (ddram_cs_n),
-  //     .ddram_dm    (ddram_dm   ),
-  //     .ddram_dq    (ddram_dq   ),
-  //     .ddram_dqs_p (ddram_dqs_p),
-  //     .ddram_dqs_n (ddram_dqs_n),
-  //     .ddram_clk_p (ddram_clk_p),
-  //     .ddram_clk_n (ddram_clk_n),
-  //     .ddram_cke   (ddram_cke  ),
-  //     .ddram_odt   (ddram_odt  ),
-  //     .init_done  (litedram_init_done),
-  //     .init_error (litedram_init_error),
-  //     .i_awid    (mem.aw_id   ),
-  //     .i_awaddr  (mem.aw_addr[26:0] ),
-  //     .i_awlen   (mem.aw_len  ),
-  //     .i_awsize  ({1'b0,mem.aw_size} ),
-  //     .i_awburst (mem.aw_burst),
-  //     .i_awvalid (mem.aw_valid),
-  //     .o_awready (mem.aw_ready),
-  //     .i_arid    (mem.ar_id   ),
-  //     .i_araddr  (mem.ar_addr[26:0] ),
-  //     .i_arlen   (mem.ar_len  ),
-  //     .i_arsize  ({1'b0,mem.ar_size} ),
-  //     .i_arburst (mem.ar_burst),
-  //     .i_arvalid (mem.ar_valid),
-  //     .o_arready (mem.ar_ready),
-  //     .i_wdata   (mem.w_data  ),
-  //     .i_wstrb   (mem.w_strb  ),
-  //     .i_wlast   (mem.w_last  ),
-  //     .i_wvalid  (mem.w_valid ),
-  //     .o_wready  (mem.w_ready ),
-  //     .o_bid     (mem.b_id    ),
-  //     .o_bresp   (mem.b_resp  ),
-  //     .o_bvalid  (mem.b_valid ),
-  //     .i_bready  (mem.b_ready ),
-  //     .o_rid     (mem.r_id    ),
-  //     .o_rdata   (mem.r_data  ),
-  //     .o_rresp   (mem.r_resp  ),
-  //     .o_rlast   (mem.r_last  ),
-  //     .o_rvalid  (mem.r_valid ),
-  //     .i_rready  (mem.r_ready ));
 
    wire [5:0]  ram_awid;
    wire [31:0] ram_awaddr;
