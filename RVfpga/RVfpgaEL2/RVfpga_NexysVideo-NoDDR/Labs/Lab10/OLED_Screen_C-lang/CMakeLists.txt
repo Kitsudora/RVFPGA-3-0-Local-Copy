@@ -8,3 +8,7 @@ set(TARGET_NAME OLED_Screen_C-lang.elf)
 add_executable(${TARGET_NAME} ${SOURCE})
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../common/Common.cmake)
+
+target_include_directories(${TARGET_NAME} PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
