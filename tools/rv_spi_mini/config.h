@@ -1,0 +1,6 @@
+#pragma once
+// SPI (using your spi register address)
+#define SPI_SPCR_ADDR 0x80001100 // global clock rate: 10Mhz
+#define SPI_SPSR_ADDR 0x80001108
+#define SPI_SPDR_ADDR 0x80001110
+#define SPI_SPER_ADDR 0x80001118
