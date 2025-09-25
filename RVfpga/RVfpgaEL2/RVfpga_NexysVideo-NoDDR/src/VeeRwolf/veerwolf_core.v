@@ -151,10 +151,12 @@ module veerwolf_core
     input wire 	       i_ram_init_error,
     output wire [ 7          :0] AN,
     output wire [ 6          :0] Digits_Bits,
-    output wire        o_accel_sclk,
-    output wire        o_accel_cs_n,
-    output wire        o_accel_mosi,
-    input wire         i_accel_miso
+    output wire        o_oled_sclk,
+    output wire        o_oled_mosi,
+    output wire        o_oled_dc,
+    output wire        o_oled_res,
+    output wire        o_oled_vbat,
+    output wire        o_oled_vdd_o
     );
 
 
@@ -448,26 +450,30 @@ module veerwolf_core
 
    // SPI for the Accelerometer
    wire [7:0]            spi2_rdt;
-   assign wb_s2m_spi_accel_dat = {24'd0,spi2_rdt};
+   assign wb_s2m_spi_oled_dat = {24'd0,spi2_rdt};
    wire        spi2_irq;
 
-   simple_spi spi2
+   oled_spi spi2
      (// Wishbone slave interface
       .clk_i  (clk),
       .rst_i  (wb_rst),
-      .adr_i  (wb_m2s_spi_accel_adr[2] ? 3'd0 : wb_m2s_spi_accel_adr[5:3]),
-      .dat_i  (wb_m2s_spi_accel_dat[7:0]),
-      .we_i   (wb_m2s_spi_accel_we),
-      .cyc_i  (wb_m2s_spi_accel_cyc),
-      .stb_i  (wb_m2s_spi_accel_stb),
+      .adr_i  (wb_m2s_spi_oled_adr[2] ? 3'd0 : wb_m2s_spi_oled_adr[5:3]),
+      .dat_i  (wb_m2s_spi_oled_dat[7:0]),
+      .we_i   (wb_m2s_spi_oled_we),
+      .cyc_i  (wb_m2s_spi_oled_cyc),
+      .stb_i  (wb_m2s_spi_oled_stb),
       .dat_o  (spi2_rdt),
-      .ack_o  (wb_s2m_spi_accel_ack),
+      .ack_o  (wb_s2m_spi_oled_ack),
       .inta_o (spi2_irq),
       // SPI interface
-      .sck_o  (o_accel_sclk),
-      .ss_o   (o_accel_cs_n),
-      .mosi_o (o_accel_mosi),
-      .miso_i (i_accel_miso));
+      .sck_o  (o_oled_sclk),
+      .mosi_o (o_oled_mosi),
+      // OLED control lines
+      .oled_dc_o(o_oled_dc),
+      .oled_res_o(o_oled_res),
+      .oled_vbat_o(o_oled_vbat),
+      .oled_vdd_o(o_oled_vdd_o)
+      );
 
 
    wire [7:0] 		       uart_rdt;

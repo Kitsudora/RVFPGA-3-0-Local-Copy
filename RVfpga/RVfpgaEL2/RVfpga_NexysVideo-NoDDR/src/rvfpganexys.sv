@@ -34,8 +34,14 @@ module rvfpganexys
     output wire        o_uart_tx,
 
     inout wire [7:0]  i_sw,
-    output reg [7:0]  o_led
+    output reg [7:0]  o_led,
 
+    output wire        o_oled_sclk,
+    output wire        o_oled_sdin,
+    output wire        o_oled_dc,
+    output wire        o_oled_res,
+    output wire        o_oled_vbat,
+    output wire        o_oled_vdd
     );
 
   localparam RAM_SIZE     = 32'h10000;
@@ -215,47 +221,6 @@ module rvfpganexys
       .i_flash_miso   (i_flash_miso),
       .i_uart_rx      (i_uart_rx),
       .o_uart_tx      (cpu_tx),
-      // .o_ram_awid     (cpu.aw_id),
-      // .o_ram_awaddr   (cpu.aw_addr),
-      // .o_ram_awlen    (cpu.aw_len),
-      // .o_ram_awsize   (cpu.aw_size),
-      // .o_ram_awburst  (cpu.aw_burst),
-      // .o_ram_awlock   (cpu.aw_lock),
-      // .o_ram_awcache  (cpu.aw_cache),
-      // .o_ram_awprot   (cpu.aw_prot),
-      // .o_ram_awregion (cpu.aw_region),
-      // .o_ram_awqos    (cpu.aw_qos),
-      // .o_ram_awvalid  (cpu.aw_valid),
-      // .i_ram_awready  (cpu.aw_ready),
-      // .o_ram_arid     (cpu.ar_id),
-      // .o_ram_araddr   (cpu.ar_addr),
-      // .o_ram_arlen    (cpu.ar_len),
-      // .o_ram_arsize   (cpu.ar_size),
-      // .o_ram_arburst  (cpu.ar_burst),
-      // .o_ram_arlock   (cpu.ar_lock),
-      // .o_ram_arcache  (cpu.ar_cache),
-      // .o_ram_arprot   (cpu.ar_prot),
-      // .o_ram_arregion (cpu.ar_region),
-      // .o_ram_arqos    (cpu.ar_qos),
-      // .o_ram_arvalid  (cpu.ar_valid),
-      // .i_ram_arready  (cpu.ar_ready),
-      // .o_ram_wdata    (cpu.w_data),
-      // .o_ram_wstrb    (cpu.w_strb),
-      // .o_ram_wlast    (cpu.w_last),
-      // .o_ram_wvalid   (cpu.w_valid),
-      // .i_ram_wready   (cpu.w_ready),
-      // .i_ram_bid      (cpu.b_id),
-      // .i_ram_bresp    (cpu.b_resp),
-      // .i_ram_bvalid   (cpu.b_valid),
-      // .o_ram_bready   (cpu.b_ready),
-      // .i_ram_rid      (cpu.r_id),
-      // .i_ram_rdata    (cpu.r_data),
-      // .i_ram_rresp    (cpu.r_resp),
-      // .i_ram_rlast    (cpu.r_last),
-      // .i_ram_rvalid   (cpu.r_valid),
-      // .o_ram_rready   (cpu.r_ready),
-      // .i_ram_init_done  (litedram_init_done),
-      // .i_ram_init_error (litedram_init_error),
       .o_ram_awid          (ram_awid),
       .o_ram_awaddr        (ram_awaddr),
       .o_ram_awlen         (ram_awlen),
@@ -297,8 +262,13 @@ module rvfpganexys
       .o_ram_rready        (ram_rready),
       .i_ram_init_done     (1'b1),
       .i_ram_init_error    (1'b0),
-      .io_data        ({i_sw_slice[15:0],gpio_out[15:0]})
-
+      .io_data        ({i_sw_slice[15:0],gpio_out[15:0]}),
+      .o_oled_sclk(o_oled_sclk),
+      .o_oled_mosi(o_oled_sdin),
+      .o_oled_dc(o_oled_dc),
+      .o_oled_res(o_oled_res),
+      .o_oled_vbat(o_oled_vbat),
+      .o_oled_vdd_o(o_oled_vdd)
       );
 
    always @(posedge clk_core) begin
