@@ -1,0 +1,6 @@
+.pio
+.vscode
+.settings
+.library_mapping.xml
+.project
+build
