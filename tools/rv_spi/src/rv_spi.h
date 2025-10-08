@@ -5,8 +5,8 @@
 #include "config.h"
 #include "utils.h"
 
-#define SPI_SPDR_VALUE (*(volatile uint8_t *)(SPI_SPDR_ADDR))
-#define SPI_SPSR_VALUE (*(volatile uint8_t *)(SPI_SPSR_ADDR))
+#define SPI_SPDR_VALUE (*(volatile uint8_t *)(spi_adr_base + SPI_SPDR_ADDR))
+#define SPI_SPSR_VALUE (*(volatile uint8_t *)(spi_adr_base + SPI_SPSR_ADDR))
 
 #define SPI_TRANSFER_TIMEOUT_ITERATIONS 1000000u
 
@@ -86,33 +86,35 @@ typedef enum {
     SPSR_SPIF    = 1u << 7 
 } spi_spsr_enum;
 
+static uint32_t spi_adr_base = 0x80001100; 
 
 // functions
-void spi_cfg(spi_div_t divider, spi_mode_t mode, spi_icnt_t icnt)
+void spi_cfg(uint32_t adr_base, spi_div_t divider, spi_mode_t mode, spi_icnt_t icnt)
 {
+    spi_adr_base = adr_base;
     uint8_t SPCR = 0b11011111 & (SPI_DIV_GET_SPR(divider) | mode);
     uint8_t SPER = 0b11000011 & (SPI_DIV_GET_ESPR(divider) | icnt);
 
-    WRITE_ADDR(SPI_SPCR_ADDR, SPCR);
-    WRITE_ADDR(SPI_SPER_ADDR, SPER);
+    WRITE_ADDR(spi_adr_base + SPI_SPCR_ADDR, SPCR);
+    WRITE_ADDR(spi_adr_base + SPI_SPER_ADDR, SPER);
 }
 
-static inline void spi_enable(){WRITE_ADDR(SPI_SPCR_ADDR, READ_ADDR(SPI_SPCR_ADDR) | SPI_CR_SPE);}
+static inline void spi_enable(){WRITE_ADDR(spi_adr_base + SPI_SPCR_ADDR, READ_ADDR(spi_adr_base + SPI_SPCR_ADDR) | SPI_CR_SPE);}
 
-static inline void spi_disable(){WRITE_ADDR(SPI_SPCR_ADDR, READ_ADDR(SPI_SPCR_ADDR) & ~SPI_CR_SPE);}
+static inline void spi_disable(){WRITE_ADDR(spi_adr_base + SPI_SPCR_ADDR, READ_ADDR(spi_adr_base + SPI_SPCR_ADDR) & ~SPI_CR_SPE);}
 
-static inline void spi_intp_enable(){WRITE_ADDR(SPI_SPCR_ADDR, READ_ADDR(SPI_SPCR_ADDR) | SPI_CR_SPIE);}
+static inline void spi_intp_enable(){WRITE_ADDR(spi_adr_base + SPI_SPCR_ADDR, READ_ADDR(spi_adr_base + SPI_SPCR_ADDR) | SPI_CR_SPIE);}
 
-static inline void spi_intp_disable(){WRITE_ADDR(SPI_SPCR_ADDR, READ_ADDR(SPI_SPCR_ADDR) & ~SPI_CR_SPIE);}
+static inline void spi_intp_disable(){WRITE_ADDR(spi_adr_base + SPI_SPCR_ADDR, READ_ADDR(spi_adr_base + SPI_SPCR_ADDR) & ~SPI_CR_SPIE);}
 
-static inline void spi_set_master(){WRITE_ADDR(SPI_SPCR_ADDR, READ_ADDR(SPI_SPCR_ADDR) | SPI_CR_MSTR);}
+static inline void spi_set_master(){WRITE_ADDR(spi_adr_base + SPI_SPCR_ADDR, READ_ADDR(spi_adr_base + SPI_SPCR_ADDR) | SPI_CR_MSTR);}
 
-static inline void spi_set_slave(){WRITE_ADDR(SPI_SPCR_ADDR, READ_ADDR(SPI_SPCR_ADDR) & ~SPI_CR_MSTR);}
+static inline void spi_set_slave(){WRITE_ADDR(spi_adr_base + SPI_SPCR_ADDR, READ_ADDR(spi_adr_base + SPI_SPCR_ADDR) & ~SPI_CR_MSTR);}
 
 uint8_t spi_transfer(uint8_t value)
 {
     while(SPI_SPSR_VALUE & SPSR_WFFULL){} // write if buffer(fifo) not full
-    WRITE_ADDR(SPI_SPDR_ADDR, value);
+    WRITE_ADDR(spi_adr_base + SPI_SPDR_ADDR, value);
 
     uint32_t timeout = SPI_TRANSFER_TIMEOUT_ITERATIONS;
     while((SPI_SPSR_VALUE & SPSR_RFEMPTY) && timeout > 0){
@@ -122,6 +124,6 @@ uint8_t spi_transfer(uint8_t value)
         return 0;
     }
 
-    uint8_t response = READ_ADDR(SPI_SPDR_ADDR);    // check return value here during debug
+    uint8_t response = READ_ADDR(spi_adr_base + SPI_SPDR_ADDR);    // check return value here during debug
     return response;
 }

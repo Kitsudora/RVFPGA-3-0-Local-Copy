@@ -52,7 +52,7 @@ void oled_clear()
 void oled_startup()
 {
     // spi config
-    spi_cfg(SPI_DIV_64, SPI_MODE3, SPI_ICNT_1);
+    spi_cfg(SPI_ADR_BASE ,SPI_DIV_64, SPI_MODE3, SPI_ICNT_1);
     spi_enable();
     spi_intp_disable();
     spi_set_master();
