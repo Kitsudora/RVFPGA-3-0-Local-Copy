@@ -113,7 +113,7 @@ Lightweight helpers included in this repo to speed up peripheral control and int
 
 ### rv_spi_mini
 A minimal driver tailored for the `simple_spi` core used in RVfpga designs, providing a more direct and lightweight SPI API for labs and quick prototyping.  
-**Docs** → [`tools/rv_spi_mini/README.md`](tools/rv_spi_mini/README.md)
+**Docs** → [`tools/rv_spi/README.md`](tools/rv_spi_mini/README.md)
 
 ### wb_intercon
 A generator for **Wishbone** interconnects to automate bus topology wiring between modules.  
