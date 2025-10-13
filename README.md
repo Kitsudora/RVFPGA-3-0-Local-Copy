@@ -66,12 +66,14 @@ This repository aggregates curated learning materials and lightweight tooling ar
 ### Are you here to learn or to develop?
 
 #### If you’re here to **learn**
-Clone the materials hub and follow the labs/examples.
-```bash
-git clone https://github.com/Kitsudora/RVFPGA-3-0-Local-Copy.git
-```
+Download the latest **Release package** from the [Releases](../../releases) section instead of cloning the full repository.  
+This package contains all lab materials, reference designs, and example projects needed for the course.
 
-#### If you’re here to **develop** (recommended: **Use this template**)
+You may optionally set up your own **Git repository** to manage your local work and track progress.  
+This is not required for coursework but is recommended for good version control practice.
+
+
+#### If you’re here to **develop**
 Create your own project repo from the relevant **board** repository:
 1. Open the board repo you need (e.g. <https://github.com/Kitsudora/board-nexys-a7-ddr-el2>).
 2. Click **Use this template** → **Create a new repository**.
@@ -86,12 +88,6 @@ Create your own project repo from the relevant **board** repository:
 ```bash
 git clone https://github.com/<your-org-or-account>/<your-repo>.git
 cd <your-repo>
-```
-6. (Optional) Add **upstream** to pull future updates from the original board repo (example for Nexys A7 DDR EL2):
-```bash
-git remote add upstream https://github.com/Kitsudora/board-nexys-a7-ddr-el2.git
-git fetch upstream
-git merge upstream/main   # or: git rebase upstream/main
 ```
 > **Note**: This project does **not** provide a "main‑repo template" path; always start from a **board** repository.
 
@@ -122,6 +118,20 @@ This project pins to a **specific** upstream commit (not the latest):
 **Docs** → [`tools/wb_intercon/README.md`](tools/wb_intercon/README.md)
 
 ---
+### Linux Environment
+
+The official RVfpga materials are designed for a **Cygwin-based** setup under Windows, but **WSL2 (Windows Subsystem for Linux 2)** with **Ubuntu 22.04 LTS** (or Ubuntu 24.04) can also be used. Both environments provide compatible Linux functionality for building and running the FPGA projects.
+
+> **Note:** The official course materials do **not** include WSL2 setup instructions.  
+> This is an **optional extension**, recommended for students already familiar with Linux-based workflows.
+
+If you are not familiar with Ubuntu or Linux, 
+you can start by installing Ubuntu and familiarizing yourself with basic Linux commands and package management.  
+Here are some general tutorials and documentation to help you get started:
+
+- [Ubuntu Basics for Beginners (official documentation)](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview)  
+
+These resources cover navigating the command line, and managing files and packages, enough to get started comfortably within this environment.
 
 ## Updates
 A summary of what’s added/changed compared to the vanilla RVfpga 3.0 package.
