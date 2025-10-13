@@ -155,6 +155,12 @@ This section documents a few environment-specific issues you may encounter durin
 2. **GTKWave 4 Tcl script compatibility**  
   GTKWave 4 has temporarily removed support for `.tcl` scripts.  
   **Workaround:** Use **GTKWave 3** to maintain full compatibility with existing waveform and script setups.
+---
+## Feedback and Support
+
+If you encounter any issues — such as documentation errors, environment setup problems, or unexpected behavior —  
+please open an **Issue** on the repository.  
+We’ll review your report, provide assistance, and update the materials accordingly.
 
 
 *Happy hacking, and remember: check the official vendor/course docs first—they already cover most issues you’ll encounter.*
