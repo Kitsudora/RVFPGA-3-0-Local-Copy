@@ -134,6 +134,19 @@ A summary of what’s added/changed compared to the vanilla RVfpga 3.0 package.
 
 ---
 
+## Known Issues & Workarounds
+
+This section documents a few environment-specific issues you may encounter during setup and simulation.
+
+1. **Verilator 5 timing directive handling**  
+   Verilator 5 requires an explicit decision on whether to include timing directives (e.g., `#1`) during compilation.  
+   **Workaround:** You can either use **Verilator 4** or add the flag --no-timming to `VERILATOR_OPTIONS` in your Makefile to disable timing evaluation.
+
+2. **GTKWave 4 Tcl script compatibility**  
+  GTKWave 4 has temporarily removed support for `.tcl` scripts.  
+  **Workaround:** Use **GTKWave 3** to maintain full compatibility with existing waveform and script setups.
+
+
 *Happy hacking, and remember: check the official vendor/course docs first—they already cover most issues you’ll encounter.*
 
 ( , ; )
