@@ -19,7 +19,7 @@ This repository aggregates curated learning materials and lightweight tooling ar
   - [rv_spi_mini](#rv_spi_mini)
   - [wb_intercon](#wb_intercon)
 - [Updates](#updates)
-- [Known Issues & Workarounds](#known-issues-&-workarounds)
+- [Known Issues & Workarounds](#known-issues--workarounds)
 - [Feedback and Support](#feedback-and-support)
 
 ---
