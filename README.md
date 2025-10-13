@@ -14,10 +14,13 @@ This repository aggregates curated learning materials and lightweight tooling ar
   - [Repo Rules (Maintainers)](#repo-rules-maintainers)
   - [Are you here to learn or to develop?](#are-you-here-to-learn-or-to-develop)
 - [Git & GitHub Guide](#git--github-guide)
+- [Linux Environment](#linux-environment)
 - [Tools](#tools)
   - [rv_spi_mini](#rv_spi_mini)
   - [wb_intercon](#wb_intercon)
 - [Updates](#updates)
+- [Known Issues & Workarounds](#known-issues--workarounds)
+- [Feedback and Support](#feedback-and-support)
 
 ---
 
@@ -104,6 +107,22 @@ cd <your-repo>
 
 ---
 
+## Linux Environment
+The official RVfpga materials are designed for a **Cygwin-based** setup under Windows, but **WSL2 (Windows Subsystem for Linux 2)** with **Ubuntu 22.04 LTS** (or Ubuntu 24.04) can also be used. Both environments provide compatible Linux functionality for building and running the FPGA projects.
+
+> **Note:** The official course materials do **not** include WSL2 setup instructions.  
+> This is an **optional extension**, recommended for students already familiar with Linux-based workflows.
+
+If you are not familiar with Ubuntu or Linux, 
+you can start by installing Ubuntu and familiarizing yourself with basic Linux commands and package management.  
+Here are some general tutorials and documentation to help you get started:
+
+- [Ubuntu Basics for Beginners (official documentation)](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview)  
+
+These resources cover navigating the command line, and managing files and packages, enough to get started comfortably within this environment.
+
+---
+
 ## Tools
 Lightweight helpers included in this repo to speed up peripheral control and interconnect generation.
 
@@ -118,20 +137,6 @@ This project pins to a **specific** upstream commit (not the latest):
 **Docs** → [`tools/wb_intercon/README.md`](tools/wb_intercon/README.md)
 
 ---
-### Linux Environment
-
-The official RVfpga materials are designed for a **Cygwin-based** setup under Windows, but **WSL2 (Windows Subsystem for Linux 2)** with **Ubuntu 22.04 LTS** (or Ubuntu 24.04) can also be used. Both environments provide compatible Linux functionality for building and running the FPGA projects.
-
-> **Note:** The official course materials do **not** include WSL2 setup instructions.  
-> This is an **optional extension**, recommended for students already familiar with Linux-based workflows.
-
-If you are not familiar with Ubuntu or Linux, 
-you can start by installing Ubuntu and familiarizing yourself with basic Linux commands and package management.  
-Here are some general tutorials and documentation to help you get started:
-
-- [Ubuntu Basics for Beginners (official documentation)](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview)  
-
-These resources cover navigating the command line, and managing files and packages, enough to get started comfortably within this environment.
 
 ## Updates
 A summary of what’s added/changed compared to the vanilla RVfpga 3.0 package.
@@ -155,6 +160,33 @@ This section documents a few environment-specific issues you may encounter durin
 2. **GTKWave 4 Tcl script compatibility**  
   GTKWave 4 has temporarily removed support for `.tcl` scripts.  
   **Workaround:** Use **GTKWave 3** to maintain full compatibility with existing waveform and script setups.
+3. **Build or configuration path errors (e.g., `get_filename_component` issues)**  
+   When building or compiling certain projects (for example, **Al_operation**), you may encounter errors such as  
+   `get_filename_component called with incorrect number of arguments`  
+   or other messages indicating that a configuration path cannot be found.  
+   This typically occurs because some toolchain paths or project settings have not been loaded properly.  
+
+   **Workaround:**  
+   Add a `settings.json` file under your `.vscode` directory and include the following content:  
+
+   ```json
+   {
+     "cmake.configureArgs": [
+       "-DCMAKE_TOOLCHAIN_FILE=<catapult-sdk_xxxx.x.x>/build/riscv-toolchain-gcc-elf.cmake",
+       "-DPLATFORM=-RVFPGANEXYS_EL2_NODDR"  // your target platform
+     ]
+   }
+   ```
+
+   Similarly, if you encounter other missing-path or configuration-related errors during build or compile steps,  
+   you can add the corresponding parameters here to resolve them.
+
+---
+## Feedback and Support
+
+If you encounter any issues — such as documentation errors, environment setup problems, or unexpected behavior —  
+please open an **Issue** on the repository.  
+We’ll review your report, provide assistance, and update the materials accordingly.
 
 
 *Happy hacking, and remember: check the official vendor/course docs first—they already cover most issues you’ll encounter.*
