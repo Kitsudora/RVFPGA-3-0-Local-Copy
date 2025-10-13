@@ -160,6 +160,27 @@ This section documents a few environment-specific issues you may encounter durin
 2. **GTKWave 4 Tcl script compatibility**  
   GTKWave 4 has temporarily removed support for `.tcl` scripts.  
   **Workaround:** Use **GTKWave 3** to maintain full compatibility with existing waveform and script setups.
+3. **Build or configuration path errors (e.g., `get_filename_component` issues)**  
+   When building or compiling certain projects (for example, **Al_operation**), you may encounter errors such as  
+   `get_filename_component called with incorrect number of arguments`  
+   or other messages indicating that a configuration path cannot be found.  
+   This typically occurs because some toolchain paths or project settings have not been loaded properly.  
+
+   **Workaround:**  
+   Add a `settings.json` file under your `.vscode` directory and include the following content:  
+
+   ```json
+   {
+     "cmake.configureArgs": [
+       "-DCMAKE_TOOLCHAIN_FILE=<catapult-sdk_xxxx.x.x>/build/riscv-toolchain-gcc-elf.cmake",
+       "-DPLATFORM=-RVFPGANEXYS_EL2_NODDR"  // your target platform
+     ]
+   }
+   ```
+
+   Similarly, if you encounter other missing-path or configuration-related errors during build or compile steps,  
+   you can add the corresponding parameters here to resolve them.
+
 ---
 ## Feedback and Support
 
