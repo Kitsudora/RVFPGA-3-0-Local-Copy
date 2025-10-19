@@ -108,18 +108,34 @@ cd <your-repo>
 ---
 
 ## Linux Environment
-The official RVfpga materials are designed for a **Cygwin-based** setup under Windows, but **WSL2 (Windows Subsystem for Linux 2)** with **Ubuntu 22.04 LTS** (or Ubuntu 24.04) can also be used. Both environments provide compatible Linux functionality for building and running the FPGA projects.
 
-> **Note:** The official course materials do **not** include WSL2 setup instructions.  
-> This is an **optional extension**, recommended for students already familiar with Linux-based workflows.
+The RVfpga toolchain and build system are natively developed for **Linux**,  
+so both **Windows** and **macOS** users are advised to use a Linux-based environment for project development and simulation.
 
-If you are not familiar with Ubuntu or Linux, 
-you can start by installing Ubuntu and familiarizing yourself with basic Linux commands and package management.  
-Here are some general tutorials and documentation to help you get started:
+If you are not familiar with Ubuntu or Linux, you can start by installing Ubuntu and learning the basic command-line operations.  Here is an introductory guide:  
+- [Ubuntu Basics for Beginners (official documentation)](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview)
 
-- [Ubuntu Basics for Beginners (official documentation)](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview)  
+---
 
-These resources cover navigating the command line, and managing files and packages, enough to get started comfortably within this environment.
+### For Windows Users
+
+The official RVfpga materials recommend using **Cygwin**, which provides a Linux-like environment within Windows.  
+Cygwin supports the required build tools and scripts and is fully compatible with the official teaching materials.  
+
+> *Tip:* You can also use **WSL2 (Windows Subsystem for Linux 2)** with **Ubuntu 22.04**. This setup allows convenient access to shared files between Linux and Windows, and avoids the performance limitations of running Vivado inside a virtual machine. The official materials do **not** include setup instructions for WSL2, and it requires manual installation and configuration of all dependencies.
+
+---
+
+### For macOS Users
+
+For macOS, the recommended approach is to use the **official RVfpga Virtual Machine**,  
+which provides an Ubuntu 22.04 LTS environment preconfigured for RVfpga development (excluding Vivado).  
+The VM can be executed in **VirtualBox** or **VMWare**, using the distributed `.ova` image that follows the Open Virtualization Format 1.0 standard.
+
+> **Note:** The official virtual machine is based on an **x86 Ubuntu image** and therefore cannot be used  with **VirtualBox** on Apple Silicon (M1/M2/M3) systems. In these cases, use **UTM** (free, QEMU-based) or **Parallels Desktop** (commercial) instead. Both options can provide a functional Linux environment for RVfpga development.
+
+This setup provides a ready-to-use environment for the software and simulation components of RVfpga,  
+while **Vivado** should still be installed separately on the host system for FPGA synthesis and bitstream generation.
 
 ---
 
@@ -180,6 +196,19 @@ This section documents a few environment-specific issues you may encounter durin
 
    Similarly, if you encounter other missing-path or configuration-related errors during build or compile steps,  
    you can add the corresponding parameters here to resolve them.
+
+4. **Catapult SDK version and UI inconsistencies**  
+   The **Catapult SDK** interface and naming conventions differ slightly from those described in the documentation.  
+   **Workaround:** Make sure to use the correct Catapult SDK version.The version used in the course materials is **Catapult-sdk_1.9.1**, available at [https://github.com/imgtec-riscv/catapult-sdk/releases/tag/v1.9.1](https://github.com/imgtec-riscv/catapult-sdk/releases/tag/v1.9.1).  
+   
+   When switching to a different version, update your environment variables to match the new installation path.  
+   Version **v2024.3.0** can still be used with RVfpga, but the configuration process and UI layout may differ slightly.
+
+
+
+
+
+
 
 ---
 ## Feedback and Support
