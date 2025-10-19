@@ -1,6 +1,6 @@
 TOP_MODULE = rvfpgasim
 VC_FILE = rvfpgasim.vc
-VERILATOR_OPTIONS = --trace -Wno-fatal --no-timing
+VERILATOR_OPTIONS = --trace -Wno-fatal
 
 #Assume a local installation if VERILATOR_ROOT is set
 ifeq ($(VERILATOR_ROOT),)
