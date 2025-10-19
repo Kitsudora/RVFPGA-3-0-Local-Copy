@@ -35,21 +35,21 @@ This repository aggregates curated learning materials and lightweight tooling ar
 > You’ll typically work inside **one board repo** (create your own copy from a template), while the **Local‑Copy** repo is the landing hub for materials.
 
 - **Main (materials hub)** — **you are here**  
-  **RVFPGA-3-0-Local-Copy** → <https://github.com/Kitsudora/RVFPGA-3-0-Local-Copy>
+  [**RVFPGA-3-0-Local-Copy**](https://github.com/Kitsudora/RVFPGA-3-0-Local-Copy)
   - Contains the complete teaching materials and extra utilities aggregated for the course.
 
 - **Board targets** (create your project from these):
-  - **Nexys A7 (DDR, EH1)** — <https://github.com/Kitsudora/board-nexys-a7-ddr-eh1>
+  - [**Nexys A7 (DDR, EH1)**](https://github.com/Kitsudora/board-nexys-a7-ddr-eh1)
     - VeeRwolf **EH1** SoC port for Nexys A7 with **DDR2** access; includes `src/` and debugging assets in `common/`.
-  - **Nexys A7 (NoDDR, EL2)** — <https://github.com/Kitsudora/board-nexys-a7-noddr-el2>
+  - [**Nexys A7 (NoDDR, EL2)**](https://github.com/Kitsudora/board-nexys-a7-noddr-el2)
     - VeeRwolf **EL2** SoC port for Nexys A7 **without** DDR2; includes `src/` and `common/`.
-  - **Nexys A7 (DDR, EL2)** — <https://github.com/Kitsudora/board-nexys-a7-ddr-el2>
+  - [**Nexys A7 (DDR, EL2)**](https://github.com/Kitsudora/board-nexys-a7-ddr-el2)
     - VeeRwolf **EL2** SoC port for Nexys A7 **with** DDR2; includes `src/` and `common/`.
-  - **Basys3 (EL1)** — <https://github.com/Kitsudora/board-basys3-el2>
-    - VeeRwolf **EL1** SoC port for Basys3; includes `src/` and `common/`.
-  - **Boolean (EL1)** — <https://github.com/Kitsudora/board-boolean-el2>
-    - VeeRwolf **EL1** SoC port for Boolean board; includes `src/` and `common/`.
-  - **Nexys Video (EL2, DDR3)** — <https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2>
+  - [**Basys3 (EL2)**](https://github.com/Kitsudora/board-basys3-el2)
+    - VeeRwolf **EL2** SoC port for Basys3; includes `src/` and `common/`.
+  - [**Boolean (EL2)**](https://github.com/Kitsudora/board-boolean-el2)
+    - VeeRwolf **EL2** SoC port for Boolean board; includes `src/` and `common/`.
+  - [**Nexys Video (EL2, DDR3)**](https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2)
     - VeeRwolf **EL2** SoC port for Nexys Video **with DDR3**; includes `src/`, `common/`, and Catapult SDK config (`nexysvideoconfig/`).  
     *This is additional content beyond the vanilla course.*
 
@@ -122,7 +122,7 @@ If you are not familiar with Ubuntu or Linux, you can start by installing Ubuntu
 The official RVfpga materials recommend using **Cygwin**, which provides a Linux-like environment within Windows.  
 Cygwin supports the required build tools and scripts and is fully compatible with the official teaching materials.  
 
-> *Tip:* You can also use **WSL2 (Windows Subsystem for Linux 2)** with **Ubuntu 22.04**. This setup allows convenient access to shared files between Linux and Windows, and avoids the performance limitations of running Vivado inside a virtual machine. The official materials do **not** include setup instructions for WSL2, and it requires manual installation and configuration of all dependencies.
+> **Note:** You can also use **WSL2 (Windows Subsystem for Linux 2)** with **Ubuntu 22.04**. This setup allows convenient access to shared files between Linux and Windows, and avoids the performance limitations of running Vivado inside a virtual machine. The official materials do **not** include setup instructions for WSL2, and it requires manual installation and configuration of all dependencies.
 
 ---
 
@@ -199,16 +199,10 @@ This section documents a few environment-specific issues you may encounter durin
 
 4. **Catapult SDK version and UI inconsistencies**  
    The **Catapult SDK** interface and naming conventions differ slightly from those described in the documentation.  
-   **Workaround:** Make sure to use the correct Catapult SDK version.The version used in the course materials is **Catapult-sdk_1.9.1**, available at [https://github.com/imgtec-riscv/catapult-sdk/releases/tag/v1.9.1](https://github.com/imgtec-riscv/catapult-sdk/releases/tag/v1.9.1).  
-   
+   **Workaround:** Make sure to use the correct Catapult SDK version.The version used in the course materials is **Catapult-sdk_1.9.1**, available at <https://github.com/imgtec-riscv/catapult-sdk/releases/tag/v1.9.1>
+
    When switching to a different version, update your environment variables to match the new installation path.  
    Version **v2024.3.0** can still be used with RVfpga, but the configuration process and UI layout may differ slightly.
-
-
-
-
-
-
 
 ---
 ## Feedback and Support
