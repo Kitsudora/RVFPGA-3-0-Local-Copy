@@ -34,7 +34,7 @@ This repository aggregates curated learning materials and lightweight tooling ar
 ## Repository Map
 > You’ll typically work inside **one board repo** (create your own copy from a template), while the **Local‑Copy** repo is the landing hub for materials.
 
-- **Main (materials hub)** — **you are here**  
+- **Main (materials hub)** - **you are here**  
   [**RVFPGA-3-0-Local-Copy**](https://github.com/Kitsudora/RVFPGA-3-0-Local-Copy)
   - Contains the complete teaching materials and extra utilities aggregated for the course.
 
