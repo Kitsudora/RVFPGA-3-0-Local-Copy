@@ -49,7 +49,7 @@ This repository aggregates curated learning materials and lightweight tooling ar
     - VeeRwolf **EL2** SoC port for Basys3; includes `src/` and `common/`.
   - [**Boolean (EL2)**](https://github.com/Kitsudora/board-boolean-el2)
     - VeeRwolf **EL2** SoC port for Boolean board; includes `src/` and `common/`.
-  - [**Nexys Video (EL2, DDR3)**](https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2)
+  - [**Nexys Video (DDR3, EL2)**](https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2)
     - VeeRwolf **EL2** SoC port for Nexys Video **with DDR3**; includes `src/`, `common/`, and Catapult SDK config (`nexysvideoconfig/`).  
     *This is additional content beyond the vanilla course.*
 
