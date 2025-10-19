@@ -40,17 +40,11 @@ This repository aggregates curated learning materials and lightweight tooling ar
 
 - **Board targets** (create your project from these):
   - [**Nexys A7 (DDR, EH1)**](https://github.com/Kitsudora/board-nexys-a7-ddr-eh1)
-    - VeeRwolf **EH1** SoC port for Nexys A7 with **DDR2** access; includes `src/` and debugging assets in `common/`.
   - [**Nexys A7 (NoDDR, EL2)**](https://github.com/Kitsudora/board-nexys-a7-noddr-el2)
-    - VeeRwolf **EL2** SoC port for Nexys A7 **without** DDR2; includes `src/` and `common/`.
   - [**Nexys A7 (DDR, EL2)**](https://github.com/Kitsudora/board-nexys-a7-ddr-el2)
-    - VeeRwolf **EL2** SoC port for Nexys A7 **with** DDR2; includes `src/` and `common/`.
   - [**Basys3 (EL2)**](https://github.com/Kitsudora/board-basys3-el2)
-    - VeeRwolf **EL2** SoC port for Basys3; includes `src/` and `common/`.
   - [**Boolean (EL2)**](https://github.com/Kitsudora/board-boolean-el2)
-    - VeeRwolf **EL2** SoC port for Boolean board; includes `src/` and `common/`.
-  - [**Nexys Video (EL2, DDR3)**](https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2)
-    - VeeRwolf **EL2** SoC port for Nexys Video **with DDR3**; includes `src/`, `common/`, and Catapult SDK config (`nexysvideoconfig/`).  
+  - [**Nexys Video (DDR3, EL2)**](https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2)
     *This is additional content beyond the vanilla course.*
 
 ---
