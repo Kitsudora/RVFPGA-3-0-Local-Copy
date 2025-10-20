@@ -136,6 +136,10 @@ while **Vivado** should still be installed separately on the host system for FPG
 ## Tools
 Lightweight helpers included in this repo to speed up peripheral control and interconnect generation.
 
+### axi
+A library corresponding to **AXI version 0.39.8**, providing AXI bus definition files and automated connection generation utilities for RVfpga and SoC integration workflows.  
+**Docs** → [`tools/axi/README.md`](tools/axi/README.md)
+
 ### rv_spi_mini
 A minimal driver tailored for the `simple_spi` core used in RVfpga designs, providing a more direct and lightweight SPI API for labs and quick prototyping.  
 **Docs** → [`tools/rv_spi/README.md`](tools/rv_spi/README.md)
