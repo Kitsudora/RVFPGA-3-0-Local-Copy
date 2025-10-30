@@ -42,9 +42,9 @@ This repository aggregates curated learning materials and lightweight tooling ar
   - [**Nexys A7 (DDR, EH1)**](https://github.com/Kitsudora/board-nexys-a7-ddr-eh1)
   - [**Nexys A7 (NoDDR, EL2)**](https://github.com/Kitsudora/board-nexys-a7-noddr-el2)
   - [**Nexys A7 (DDR, EL2)**](https://github.com/Kitsudora/board-nexys-a7-ddr-el2)
-  - [**Basys3 (EL2)**](https://github.com/Kitsudora/board-basys3-el2)
-  - [**Boolean (EL2)**](https://github.com/Kitsudora/board-boolean-el2)
-  - [**Nexys Video (DDR3, EL2)**](https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2)
+  - [**Basys3 (NoDDR, EL2)**](https://github.com/Kitsudora/board-basys3-el2)
+  - [**Boolean (NoDDR, EL2)**](https://github.com/Kitsudora/board-boolean-el2)
+  - [**Nexys Video (NoDDR, EL2)**](https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2)
     *This is additional content beyond the vanilla course.*
 
 ---
