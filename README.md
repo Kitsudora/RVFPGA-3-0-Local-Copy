@@ -44,8 +44,14 @@ This repository aggregates curated learning materials and lightweight tooling ar
   - [**Nexys A7 (DDR, EL2)**](https://github.com/Kitsudora/board-nexys-a7-ddr-el2)
   - [**Basys3 (NoDDR, EL2)**](https://github.com/Kitsudora/board-basys3-el2)
   - [**Boolean (NoDDR, EL2)**](https://github.com/Kitsudora/board-boolean-el2)
-  - [**Nexys Video (NoDDR, EL2)**](https://github.com/Kitsudora/board-nexys-video-a7-noddr-el2)
+  - [**Nexys Video (NoDDR, EL2)**](https://github.com/Kitsudora/board-nexys-video-noddr-el2)
     *This is additional content beyond the vanilla course.*
+  - [**Nexys Video (DDR, EL2)**](https://github.com/Kitsudora/board-nexys-video-ddr-el2)
+    *This additional content does not include the teaching material, as it is basically the same as that for the Nexys NoDDR.*
+
+- **Example Projects**:
+  - [**Wishbone I2C Example Nexys A7 (DDR, EL2)**](https://github.com/Kitsudora/example-i2c-wishbone-nexys-a7-ddr-el2)
+  - [**AXI VGA Example Nexys A7 (DDR, EL2)**](https://github.com/Kitsudora/example-vga-axi-nexys-a7-ddr-el2)
 
 ---
 
